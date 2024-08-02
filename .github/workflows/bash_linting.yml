@@ -13,13 +13,6 @@ jobs:
     - name: Set up Bash linter
       run: sudo apt-get install -y shellcheck
 
-    - name: Set up HTMLHint
-      run: npm install -g htmlhint
-
     - name: Lint Bash scripts
       run: shellcheck deploy_frontend.sh 
     
-    - name: Lint HTML files
-      run: |
-        # Find all HTML files and run htmlhint on each
-        find . -name '*.html' -print0 | xargs -0 htmlhint

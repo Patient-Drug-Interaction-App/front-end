@@ -14,6 +14,9 @@ sudo systemctl enable nginx
 sudo firewall-cmd --permanent --add-service=http
 sudo firewall-cmd --reload
 
+#Set SELinux httpd can connect to 1
+sudo setsebool -P httpd_can_network_connect 1
+
 # Remove the default Nginx configuration
 sudo rm /etc/nginx/conf.d/default.conf
 
