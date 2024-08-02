@@ -17,6 +17,9 @@ sudo firewall-cmd --reload
 # Remove the default Nginx configuration
 sudo rm /etc/nginx/conf.d/default.conf
 
+# Creates variable for public IP
+sudo PUBLIC_IP=$(curl -s ifconfig.me)
+
 # Create a new Nginx configuration file
 cat <<EOL | sudo tee /etc/nginx/conf.d/search_interface.conf
 server {
@@ -87,7 +90,7 @@ cat <<EOL | sudo tee /usr/share/nginx/html/index.html
             }
 
             try {
-                const response = await fetch(\`http://129.213.24.197/search?query=\${encodeURIComponent(query)}\`);
+                const response = await fetch(\`http://$PUBLIC_IP/search?query=\${encodeURIComponent(query)}\`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok ' + response.statusText);
                 }
