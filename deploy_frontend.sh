@@ -49,6 +49,7 @@ EOL
 sudo mkdir -p /usr/share/nginx/html
 
 # Create the HTML file
+# shellcheck disable=SC2006,SC2276,SC2211,SC2086,SC2154
 cat <<EOL | sudo tee /usr/share/nginx/html/index.html
 <!DOCTYPE html>
 <html lang="en">
