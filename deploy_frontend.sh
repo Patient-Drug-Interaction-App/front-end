@@ -94,7 +94,7 @@ cat <<EOL | sudo tee /usr/share/nginx/html/index.html
             }
 
             try {
-                const response = await fetch(`http://${PUBLIC_IP}/search?query=\${encodeURIComponent(query)}`);
+                const response = await fetch(`http://${PUBLIC_IP}/search?query=${encodeURIComponent(query)}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok ' + response.statusText);
                 }
