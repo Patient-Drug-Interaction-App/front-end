@@ -21,7 +21,10 @@ sudo setsebool -P httpd_can_network_connect 1
 sudo rm /etc/nginx/conf.d/default.conf
 
 # Creates variable for public IP
-sudo PUBLIC_IP="$(curl -s ifconfig.me)"
+PUBLIC_IP=$(curl -s ifconfig.me)
+
+#prints public IP Variable for Debugging
+echo "Public IP: $PUBLIC_IP"
 
 # Create a new Nginx configuration file
 cat <<EOL | sudo tee /etc/nginx/conf.d/search_interface.conf
