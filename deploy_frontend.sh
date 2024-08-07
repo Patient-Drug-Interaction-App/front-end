@@ -21,7 +21,7 @@ sudo setsebool -P httpd_can_network_connect 1
 sudo rm /etc/nginx/conf.d/default.conf
 
 # Creates variable for public IP
-sudo PUBLIC_IP="$(curl -s ifconfig.me)"
+# sudo PUBLIC_IP="$(curl -s ifconfig.me)"
 
 # Create a new Nginx configuration file
 cat <<EOL | sudo tee /etc/nginx/conf.d/search_interface.conf
@@ -94,7 +94,7 @@ cat <<EOL | sudo tee /usr/share/nginx/html/index.html
             }
 
             try {
-                const response = await fetch(\`http://${PUBLIC_IP}/search?query=${encodeURIComponent(query)}\`);
+                const response = await fetch(\`http://193.122.152.214/search?query=\${encodeURIComponent(query)}\`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok ' + response.statusText);
                 }
