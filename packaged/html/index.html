@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input[type="text"] {
+            width: 300px;
+            padding: 8px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 8px 15px;
+            cursor: pointer;
+        }
+        #results div {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Search Interface</h1>
+    <input type="text" id="searchQuery" placeholder="Enter search query">
+    <button onclick="performSearch()">Search</button>
+    <div id="results"></div>
+
+    <script>
+        async function performSearch() {
+            const query = document.getElementById('searchQuery').value.trim();
+            if (!query) {
+                alert('Please enter a search query.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://${PUBLIC_IP}/search?query=${encodeURIComponent(query)}`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                const results = await response.json();
+                displayResults(results);
+            } catch (error) {
+                console.error('There has been a problem with your fetch operation:', error);
+                document.getElementById('results').textContent = 'Error fetching results.';
+            }
+        }
+
+        function displayResults(results) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+
+            if (Array.isArray(results) && results.length > 0) {
+                results.forEach(result => {
+                    const resultItem = document.createElement('div');
+                    resultItem.innerHTML = formatResult(result);
+                    resultsDiv.appendChild(resultItem);
+                });
+            } else {
+                resultsDiv.textContent = 'No results found.';
+            }
+        }
+
+        function formatResult(result) {
+            let formatted = '';
+            for (const key in result) {
+                if (result.hasOwnProperty(key)) {
+                    formatted += `<strong>${key}:</strong> ${result[key]}<br>`;
+                }
+            }
+            return formatted;
+        }
+    </script>
+</body>
+</html>
